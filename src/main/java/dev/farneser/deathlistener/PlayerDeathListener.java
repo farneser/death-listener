@@ -19,9 +19,7 @@ public class PlayerDeathListener implements Listener {
         try {
             Connection connection = ConnectionFactory.getInstance();
 
-            PreparedStatement statement = connection.prepareStatement("""
-                    INSERT INTO player_deaths (player_id, player_name, death_x, death_y, death_z, death_time, death_message) VALUES (?, ?, ?, ?, ?, ?, ?);
-                    """);
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO player_deaths (player_id, player_name, death_x, death_y, death_z, death_time, death_message) VALUES (?, ?, ?, ?, ?, ?, ?);");
 
             statement.setString(1, event.getPlayer().getUniqueId().toString());
             statement.setString(2, event.getPlayer().getName());

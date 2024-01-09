@@ -1,4 +1,4 @@
-name: deathlistener
+name: DeathListener
 version: '${project.version}'
 main: dev.farneser.deathlistener.DeathListener
 api-version: '1.20'
