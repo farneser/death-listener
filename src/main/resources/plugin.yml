@@ -2,3 +2,8 @@ name: DeathListener
 version: '${project.version}'
 main: dev.farneser.deathlistener.DeathListener
 api-version: '1.20'
+author: farneser
+commands:
+  dlist:
+    description: Show latest deaths
+    usage: /dlist page
