@@ -1,19 +1,19 @@
 name: DeathListener
 version: '${project.version}'
-main: dev.farneser.deathslistener.DeathListener
+main: dev.farneser.deathlistener.DeathListener
 api-version: '1.20'
 author: farneser
 commands:
   dlist:
     description: Show latest deaths
     usage: /dlist page
-    permission: deaths-list.dlist
+    permission: death-list.dlist
 permissions:
-  deaths-list.dlist:
+  death-list.dlist:
     default: op
     description: Allow command to show latest deaths for player
-  deaths-list.dlist.admin:
+  death-list.dlist.admin:
     default: op
     description: Update command to show latest deaths for all players
     children:
-      - deaths-list.dlist
+      - death-list.dlist
