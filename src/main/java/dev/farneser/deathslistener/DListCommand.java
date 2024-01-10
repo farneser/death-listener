@@ -1,4 +1,4 @@
-package dev.farneser.deathlistener;
+package dev.farneser.deathslistener;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

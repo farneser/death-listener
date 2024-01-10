@@ -1,4 +1,4 @@
-package dev.farneser.deathlistener;
+package dev.farneser.deathslistener;
 
 import java.io.BufferedReader;
 import java.io.IOException;

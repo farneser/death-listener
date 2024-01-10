@@ -1,4 +1,4 @@
-package dev.farneser.deathlistener;
+package dev.farneser.deathslistener;
 
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.event.EventHandler;
@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class PlayerDeathListener implements Listener {
+public class PlayerDeathsListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {

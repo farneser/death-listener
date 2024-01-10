@@ -1,16 +1,16 @@
-package dev.farneser.deathlistener;
+package dev.farneser.deathslistener;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class DeathListener extends JavaPlugin {
+public final class DeathsListener extends JavaPlugin {
 
     @Override
     public void onEnable() {
         Objects.requireNonNull(getCommand("dlist")).setExecutor(new DListCommand());
-        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathsListener(), this);
     }
 
     @Override
@@ -20,5 +20,9 @@ public final class DeathListener extends JavaPlugin {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void main(String[] args) {
+        // ignored
     }
 }
