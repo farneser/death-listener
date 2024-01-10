@@ -7,12 +7,12 @@ commands:
   dlist:
     description: Show latest deaths
     usage: /dlist page
-    permission: death-list.dlist
+    permission: deathlistener.dlist
 permissions:
-  death-list.dlist:
+  deathlistener.dlist:
     default: op
     description: Allow command to show latest deaths for player
-  death-list.dlist.admin:
+  deathlistener.dlist.admin:
     default: op
     description: Update command to show latest deaths for all players
     children:

@@ -48,7 +48,7 @@ public class DListCommand implements CommandExecutor {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                if (commandSender.getName().equals(resultSet.getString("player_name")) || commandSender.isOp()) {
+                if (commandSender.getName().equals(resultSet.getString("player_name")) || commandSender.hasPermission("deathlistener.dlist.admin")) {
                     messages.add(resultSet.getString("player_name") + " | " + resultSet.getString("death_message"));
                     messages.add(resultSet.getString("death_time") + " on: " + Math.round(resultSet.getDouble("death_x")) + " " + Math.round(resultSet.getDouble("death_y")) + " " + Math.round(resultSet.getDouble("death_z")));
                 }
