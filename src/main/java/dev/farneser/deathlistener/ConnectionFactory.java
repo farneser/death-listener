@@ -15,7 +15,7 @@ public class ConnectionFactory {
         Class.forName("org.sqlite.JDBC");
 
         try {
-            INSTANCE = DriverManager.getConnection("jdbc:sqlite:/death_listener/player_deaths.db");
+            INSTANCE = DriverManager.getConnection("jdbc:sqlite:player_deaths.db");
 
             StringBuilder sql = new StringBuilder();
 

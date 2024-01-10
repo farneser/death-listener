@@ -8,8 +8,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class PlayerDeathListener implements Listener {
@@ -26,7 +26,8 @@ public class PlayerDeathListener implements Listener {
             statement.setDouble(3, event.getPlayer().getLocation().getX());
             statement.setDouble(4, event.getPlayer().getLocation().getY());
             statement.setDouble(5, event.getPlayer().getLocation().getZ());
-            statement.setString(6, LocalDateTime.now().toString());
+            statement.setString(6, new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+
             String deathMsg = PlainTextComponentSerializer.plainText().serialize(Objects.requireNonNull(event.deathMessage()));
 
             statement.setString(7, deathMsg);
