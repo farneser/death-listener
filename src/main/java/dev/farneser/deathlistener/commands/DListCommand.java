@@ -1,5 +1,10 @@
-package dev.farneser.deathlistener;
+package dev.farneser.deathlistener.commands;
 
+import dev.farneser.deathlistener.ConnectionFactory;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DListCommand implements CommandExecutor {
+    private Component buildColoredBoldComponent(final String text, TextColor color) {
+        return Component.text(text)
+                .color(TextColor.color(color))
+                .decoration(TextDecoration.BOLD, true);
+
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         final int pageSize = 2;
@@ -23,14 +35,14 @@ public class DListCommand implements CommandExecutor {
             try {
                 page = Integer.parseInt(strings[0]);
             } catch (NumberFormatException ex) {
-                commandSender.sendMessage("Failed to parce page: " + strings[0]);
+                commandSender.sendMessage(buildColoredBoldComponent("Failed to parce page: " + strings[0], NamedTextColor.RED));
 
                 return true;
             }
         }
 
         if (page < 1) {
-            commandSender.sendMessage("Page cannot be less then one");
+            commandSender.sendMessage(buildColoredBoldComponent("Page cannot be less then one", NamedTextColor.RED));
 
             return true;
         }
@@ -56,18 +68,18 @@ public class DListCommand implements CommandExecutor {
 
             resultSet.close();
         } catch (SQLException e) {
-            commandSender.sendMessage("Failed to get your deaths");
+            commandSender.sendMessage(buildColoredBoldComponent("Failed to get your deaths", NamedTextColor.RED));
 
             return true;
         }
 
         if (messages.isEmpty()) {
-            commandSender.sendMessage("Deaths not found");
+            commandSender.sendMessage(buildColoredBoldComponent("Deaths not found", NamedTextColor.YELLOW));
 
             return true;
         }
 
-        commandSender.sendMessage("Here is your deaths on page: " + page + ". Try to die less often :]");
+        commandSender.sendMessage(buildColoredBoldComponent("Here is your deaths on page: " + page + ". Try to die less often :]", NamedTextColor.GREEN));
 
         messages.forEach(commandSender::sendMessage);
 

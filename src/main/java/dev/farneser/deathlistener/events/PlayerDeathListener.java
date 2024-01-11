@@ -1,5 +1,6 @@
-package dev.farneser.deathlistener;
+package dev.farneser.deathlistener.events;
 
+import dev.farneser.deathlistener.ConnectionFactory;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

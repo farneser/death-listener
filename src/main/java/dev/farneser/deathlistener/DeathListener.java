@@ -1,5 +1,7 @@
 package dev.farneser.deathlistener;
 
+import dev.farneser.deathlistener.commands.DListCommand;
+import dev.farneser.deathlistener.events.PlayerDeathListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
@@ -9,9 +11,6 @@ public final class DeathListener extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        System.out.println("data folder");
-        System.out.println(getDataFolder());
-        System.out.println("data folder");
         Objects.requireNonNull(getCommand("dlist")).setExecutor(new DListCommand());
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
     }
