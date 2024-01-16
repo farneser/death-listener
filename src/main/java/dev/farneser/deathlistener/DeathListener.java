@@ -5,7 +5,6 @@ import dev.farneser.deathlistener.events.PlayerDeathListener;
 import lombok.extern.slf4j.Slf4j;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.Objects;
 
 @Slf4j
@@ -25,22 +24,9 @@ public final class DeathListener extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
     }
 
-    private void initDataBase() {
-        // Create database connection
-        try {
-            ConnectionFactory.buildConnection(getDataFolder().getAbsolutePath() + "/player_deaths.db");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public void onDisable() {
-        try {
-            ConnectionFactory.getInstance().close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        HibernateConfig.shutdown();
     }
 
     private void initConfig() {
@@ -50,5 +36,10 @@ public final class DeathListener extends JavaPlugin {
         }
 
         saveDefaultConfig();
+    }
+
+    private void initDataBase() {
+        // Create database connection
+        HibernateConfig.buildSessionFactory(getDataFolder().getAbsolutePath() + "/player_deaths.db");
     }
 }

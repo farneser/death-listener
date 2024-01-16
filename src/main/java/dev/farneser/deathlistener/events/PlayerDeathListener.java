@@ -1,42 +1,36 @@
 package dev.farneser.deathlistener.events;
 
-import dev.farneser.deathlistener.ConnectionFactory;
+import dev.farneser.deathlistener.HibernateConfig;
+import dev.farneser.deathlistener.dao.DeathMessageRepository;
+import dev.farneser.deathlistener.models.DeathMessage;
+import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
+@Slf4j
 public class PlayerDeathListener implements Listener {
+    private final DeathMessageRepository deathMessageRepository = new DeathMessageRepository(HibernateConfig.getSessionFactory());
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        try {
-            Connection connection = ConnectionFactory.getInstance();
 
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO player_deaths (player_id, player_name, death_x, death_y, death_z, death_time, death_message) VALUES (?, ?, ?, ?, ?, ?, ?);");
+        String deathMsg = PlainTextComponentSerializer.plainText().serialize(Objects.requireNonNull(event.deathMessage()));
 
-            statement.setString(1, event.getPlayer().getUniqueId().toString());
-            statement.setString(2, event.getPlayer().getName());
-            statement.setDouble(3, event.getPlayer().getLocation().getX());
-            statement.setDouble(4, event.getPlayer().getLocation().getY());
-            statement.setDouble(5, event.getPlayer().getLocation().getZ());
-            statement.setString(6, new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+        DeathMessage message = DeathMessage.builder()
+                .playerId(event.getEntity().getUniqueId().toString())
+                .playerName(event.getEntity().getName())
+                .deathX(event.getEntity().getLocation().getX())
+                .deathY(event.getEntity().getLocation().getY())
+                .deathZ(event.getEntity().getLocation().getZ())
+                .deathTime(new Timestamp(event.getEntity().getWorld().getFullTime()))
+                .deathMessage(deathMsg)
+                .build();
 
-            String deathMsg = PlainTextComponentSerializer.plainText().serialize(Objects.requireNonNull(event.deathMessage()));
-
-            statement.setString(7, deathMsg);
-
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        deathMessageRepository.saveOrUpdate(message);
     }
 }
