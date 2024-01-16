@@ -1,8 +1,8 @@
 package dev.farneser.deathlistener.commands;
 
-import dev.farneser.deathlistener.HibernateConfig;
-import dev.farneser.deathlistener.repository.DeathMessageRepository;
+import dev.farneser.deathlistener.config.HibernateConfig;
 import dev.farneser.deathlistener.models.DeathMessage;
+import dev.farneser.deathlistener.repository.DeathMessageRepository;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -57,6 +57,7 @@ public class DListCommand implements CommandExecutor {
         }
 
         commandSender.sendMessage(buildColoredBoldComponent("Here is your deaths on page: " + page + ". Try to die less often :]", NamedTextColor.GREEN));
+        commandSender.sendMessage(Component.text("Use /dlist [n] to get page n of deaths.", NamedTextColor.GRAY));
 
         for (DeathMessage entity : messages) {
             commandSender.sendMessage(entity.getPlayerName() + " | " + entity.getDeathMessage());

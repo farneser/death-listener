@@ -1,7 +1,6 @@
 package dev.farneser.deathlistener.repository;
 
 import dev.farneser.deathlistener.models.DeathMessage;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,9 +8,7 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class DeathMessageRepository {
-
     private final SessionFactory sessionFactory;
 
     public DeathMessageRepository(SessionFactory sessionFactory) {
@@ -20,6 +17,7 @@ public class DeathMessageRepository {
 
     public void saveOrUpdate(DeathMessage entity) {
         Transaction transaction = null;
+
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.persist(entity);
@@ -28,7 +26,6 @@ public class DeathMessageRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            log.info("Error saving death message: " + e.getMessage());
         }
     }
 
@@ -56,8 +53,6 @@ public class DeathMessageRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-
-            log.info("Error getting player deaths: " + e.getMessage());
         }
 
         return messages;

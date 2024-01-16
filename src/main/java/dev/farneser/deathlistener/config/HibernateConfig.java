@@ -1,4 +1,4 @@
-package dev.farneser.deathlistener;
+package dev.farneser.deathlistener.config;
 
 import dev.farneser.deathlistener.models.DeathMessage;
 import org.hibernate.SessionFactory;
@@ -20,7 +20,7 @@ public class HibernateConfig {
                                 .applySetting("hibernate.connection.driver_class", "org.sqlite.JDBC")
                                 .applySetting("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect")
                                 .applySetting(AvailableSettings.HBM2DDL_AUTO, "update")
-                                .applySetting(AvailableSettings.SHOW_SQL, "true")
+                                .applySetting(AvailableSettings.SHOW_SQL, "false")
                                 .applySetting(AvailableSettings.C3P0_MIN_SIZE, 5)
                                 .applySetting(AvailableSettings.C3P0_MAX_SIZE, 20)
                                 .applySetting(AvailableSettings.C3P0_TIMEOUT, 300)

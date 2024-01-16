@@ -6,8 +6,11 @@ author: farneser
 commands:
   dlist:
     description: Show latest deaths
-    usage: /dlist page
+    usage: "/dlist [<page>]"
     permission: deathlistener.dlist
+    aliases:
+      - dl
+      - d
 permissions:
   deathlistener.dlist:
     default: op

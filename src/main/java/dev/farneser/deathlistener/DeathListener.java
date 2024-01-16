@@ -1,15 +1,16 @@
 package dev.farneser.deathlistener;
 
 import dev.farneser.deathlistener.commands.DListCommand;
+import dev.farneser.deathlistener.config.HibernateConfig;
 import dev.farneser.deathlistener.events.PlayerDeathListener;
-import lombok.extern.slf4j.Slf4j;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
-@Slf4j
 @SuppressWarnings("unused")
 public final class DeathListener extends JavaPlugin {
+    private final Logger log = getLogger();
 
     @Override
     public void onEnable() {
