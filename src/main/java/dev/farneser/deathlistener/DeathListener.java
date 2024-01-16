@@ -39,6 +39,7 @@ public final class DeathListener extends JavaPlugin {
     }
 
     private void initDataBase() {
+        log.info("Initializing database");
         // Create database connection
         HibernateConfig.buildSessionFactory(getDataFolder().getAbsolutePath() + "/player_deaths.db");
     }

@@ -1,7 +1,7 @@
 package dev.farneser.deathlistener.events;
 
 import dev.farneser.deathlistener.HibernateConfig;
-import dev.farneser.deathlistener.dao.DeathMessageRepository;
+import dev.farneser.deathlistener.repository.DeathMessageRepository;
 import dev.farneser.deathlistener.models.DeathMessage;
 import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;

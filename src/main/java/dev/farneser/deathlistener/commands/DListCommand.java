@@ -1,7 +1,8 @@
 package dev.farneser.deathlistener.commands;
 
 import dev.farneser.deathlistener.HibernateConfig;
-import dev.farneser.deathlistener.dao.DeathMessageRepository;
+import dev.farneser.deathlistener.repository.DeathMessageRepository;
+import dev.farneser.deathlistener.models.DeathMessage;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -47,7 +48,7 @@ public class DListCommand implements CommandExecutor {
             return true;
         }
 
-        List<String> messages = new DeathMessageRepository(HibernateConfig.getSessionFactory()).getPlayerDeaths(pageSize, page, commandSender.getName(), commandSender.isOp());
+        List<DeathMessage> messages = new DeathMessageRepository(HibernateConfig.getSessionFactory()).getPlayerDeaths(pageSize, page, commandSender.getName(), commandSender.isOp());
 
         if (messages.isEmpty()) {
             commandSender.sendMessage(buildColoredBoldComponent("Deaths not found", NamedTextColor.YELLOW));
@@ -57,7 +58,10 @@ public class DListCommand implements CommandExecutor {
 
         commandSender.sendMessage(buildColoredBoldComponent("Here is your deaths on page: " + page + ". Try to die less often :]", NamedTextColor.GREEN));
 
-        messages.forEach(commandSender::sendMessage);
+        for (DeathMessage entity : messages) {
+            commandSender.sendMessage(entity.getPlayerName() + " | " + entity.getDeathMessage());
+            commandSender.sendMessage(entity.getDeathTime() + " on: " + Math.round(entity.getDeathX()) + " " + Math.round(entity.getDeathY()) + " " + Math.round(entity.getDeathZ()));
+        }
 
         return true;
     }

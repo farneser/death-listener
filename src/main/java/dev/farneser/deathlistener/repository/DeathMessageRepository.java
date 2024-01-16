@@ -1,6 +1,7 @@
-package dev.farneser.deathlistener.dao;
+package dev.farneser.deathlistener.repository;
 
 import dev.farneser.deathlistener.models.DeathMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,6 +9,7 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class DeathMessageRepository {
 
     private final SessionFactory sessionFactory;
@@ -26,14 +28,15 @@ public class DeathMessageRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            // TODO: handle exception
+            log.info("Error saving death message: " + e.getMessage());
         }
     }
 
-    public List<String> getPlayerDeaths(int pageSize, int page, String playerName, boolean isAdmin) {
-        List<String> messages = new ArrayList<>();
+    public List<DeathMessage> getPlayerDeaths(int pageSize, int page, String playerName, boolean isAdmin) {
+        List<DeathMessage> messages = new ArrayList<>();
 
         Transaction transaction = null;
+
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
@@ -46,17 +49,15 @@ public class DeathMessageRepository {
                     .setFirstResult(pageSize * (page - 1))
                     .list();
 
-            for (DeathMessage entity : results) {
-                messages.add(entity.getPlayerName() + " | " + entity.getDeathMessage());
-                messages.add(entity.getDeathTime() + " on: " + Math.round(entity.getDeathX()) + " " + Math.round(entity.getDeathY()) + " " + Math.round(entity.getDeathZ()));
-            }
+            messages.addAll(results);
 
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
+
+            log.info("Error getting player deaths: " + e.getMessage());
         }
 
         return messages;
