@@ -18,17 +18,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DListCommand implements CommandExecutor {
+    private int pageSize = 5;
+
+    public DListCommand(Object pageSize) {
+        if (pageSize instanceof Integer && (int) pageSize > 0) {
+            this.pageSize = (int) pageSize;
+        }
+    }
+
     private Component buildColoredBoldComponent(final String text, TextColor color) {
-        return Component.text(text)
-                .color(TextColor.color(color))
-                .decoration(TextDecoration.BOLD, true);
+        return Component.text(text).color(TextColor.color(color)).decoration(TextDecoration.BOLD, true);
 
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        final int pageSize = 2;
-
         int page = 1;
 
         if (strings.length > 0) {
